@@ -51,7 +51,7 @@ export class WorldClawEngine {
     // Режимы камеры
     this.cameraMode = 'masterplan';
     this.droneAngle = 0;
-    this.timeOfDay = 'day';
+    this.timeOfDay = 'cyber_night'; // По умолчанию для всех городов: Киберпанк Ночь
 
     // First Person Controller
     this.fps = {
@@ -89,10 +89,10 @@ export class WorldClawEngine {
     const width = this.container.clientWidth || window.innerWidth;
     const height = this.container.clientHeight || window.innerHeight;
 
-    // 1. Сцена и чистое светлое студийное окружение (как на инфографике)
+    // 1. Сцена: Глубокая атмосферная ночь по умолчанию (для всех городов)
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xf1f5f9);
-    this.scene.fog = new THREE.FogExp2(0xf1f5f9, 0.0008);
+    this.scene.background = new THREE.Color(0x020611);
+    this.scene.fog = new THREE.FogExp2(0x020611, 0.0012);
 
     // 2. Камера: Изометрическая перспектива (FOV 28° с диагональным углом)
     this.camera = new THREE.PerspectiveCamera(28, width / height, 0.5, 3500);
@@ -310,20 +310,20 @@ export class WorldClawEngine {
   }
 
   buildAtmosphere() {
-    // Светлый градиентный купол студийного неба
+    // Глубокий ночной купол неба
     const skyGeom = new THREE.SphereGeometry(1200, 32, 24);
-    const skyMat = new THREE.MeshBasicMaterial({ color: 0xf8fafc, side: THREE.BackSide });
+    const skyMat = new THREE.MeshBasicMaterial({ color: 0x020611, side: THREE.BackSide });
     this.sky = new THREE.Mesh(skyGeom, skyMat);
     this.scene.add(this.sky);
   }
 
   setupLighting() {
-    // 1. Мягкий рассеянный дневной свет (без ослепляющей яркости)
-    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
+    // 1. Ночной мягкий рассеянный свет (киберпанк синий)
+    this.ambientLight = new THREE.AmbientLight(0x0a192f, 0.35);
     this.scene.add(this.ambientLight);
 
-    // 2. Основное направленное солнце со сбалансированной яркостью и мягкими тенями (как в Blender)
-    this.sunLight = new THREE.DirectionalLight(0xfff8ee, 1.25);
+    // 2. Кибернетический лунный направленный свет со сбалансированными мягкими тенями
+    this.sunLight = new THREE.DirectionalLight(0x00f0ff, 0.75);
     this.sunLight.position.set(130, 180, 130);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.mapSize.width = 1024;
@@ -338,13 +338,13 @@ export class WorldClawEngine {
     this.sunLight.shadow.bias = -0.0002;
     this.scene.add(this.sunLight);
 
-    // 3. Заполняющий мягкий небесный свет (Fill Light)
-    const fillLight = new THREE.DirectionalLight(0xdbeafe, 0.4);
+    // 3. Заполняющий фиолетовый неон горизонта (Fill Light)
+    const fillLight = new THREE.DirectionalLight(0xa855f7, 0.45);
     fillLight.position.set(-120, 100, -110);
     this.scene.add(fillLight);
 
-    // 4. Мягкая подсветка центрального хаба
-    this.hubLight = new THREE.PointLight(0x38bdf8, 0.6, 80);
+    // 4. Яркая неоновая подсветка центрального хаба и зарядных комплексов
+    this.hubLight = new THREE.PointLight(0x00f0ff, 3.2, 120);
     this.hubLight.position.set(0, 18, 15);
     this.scene.add(this.hubLight);
   }

@@ -172,35 +172,10 @@ export class WorldClawPromptUI {
       camGroup.appendChild(btn);
     });
 
-    // Время суток
-    const timeGroup = document.createElement('div');
-    timeGroup.className = 'btn-pill-group';
-
-    const times = [
-      { id: 'cyber_night', label: '🌙 Ночь' },
-      { id: 'sunset', label: '🌅 Закат' },
-      { id: 'day', label: '☀️ День' },
-      { id: 'dawn', label: '🌌 Рассвет' }
-    ];
-
-    times.forEach((t) => {
-      const btn = document.createElement('button');
-      btn.className = `btn-pill ${t.id === 'day' ? 'active' : ''}`;
-      btn.textContent = t.label;
-      btn.addEventListener('click', () => {
-        soundFx.playClick();
-        timeGroup.querySelectorAll('.btn-pill').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (this.onTimeOfDay) this.onTimeOfDay(t.id);
-      });
-      timeGroup.appendChild(btn);
-    });
-
     rightNav.appendChild(studioBtn);
     rightNav.appendChild(aiBtn);
     rightNav.appendChild(planBtn);
     rightNav.appendChild(camGroup);
-    rightNav.appendChild(timeGroup);
 
     topBar.appendChild(leftNav);
     topBar.appendChild(rightNav);
