@@ -114,4 +114,15 @@ def get_materials_dict():
         "drone_body_white": create_pbr_material("LegoDroneWhite", (0.92, 0.94, 0.98, 1.0), roughness=0.14, metallic=0.05),
         "neon_cyan": create_pbr_material("LegoNeonCyan", (0.0, 0.95, 1.0, 1.0), roughness=0.1, emission_color=(0.0, 0.95, 1.0, 1.0), emission_strength=3.0),
         "neon_orange": create_pbr_material("LegoNeonOrange", (1.0, 0.45, 0.0, 1.0), roughness=0.1, emission_color=(1.0, 0.45, 0.0, 1.0), emission_strength=2.8),
+
+        # Farm, Vegetables & Livestock
+        "crop_carrot_orange": create_pbr_material("LegoCarrotOrange", (0.98, 0.45, 0.05, 1.0), roughness=0.18, metallic=0.0),
+        "crop_cabbage_lime": create_pbr_material("LegoCabbageLime", (0.35, 0.88, 0.15, 1.0), roughness=0.18, metallic=0.0),
+        "crop_corn_gold": create_pbr_material("LegoCornGold", (0.98, 0.82, 0.12, 1.0), roughness=0.18, metallic=0.0),
+        "hay_yellow": create_pbr_material("LegoHayYellow", (0.88, 0.72, 0.22, 1.0), roughness=0.45, metallic=0.0),
+        "wood_fence": create_pbr_material("LegoWoodFence", (0.55, 0.35, 0.18, 1.0), roughness=0.30, metallic=0.0),
+        "animal_cow_white": create_pbr_material("LegoCowWhite", (0.95, 0.95, 0.95, 1.0), roughness=0.20, metallic=0.0),
+        "animal_cow_black": create_pbr_material("LegoCowBlack", (0.08, 0.08, 0.10, 1.0), roughness=0.20, metallic=0.0),
+        "animal_sheep_wool": create_pbr_material("LegoSheepWool", (0.92, 0.90, 0.85, 1.0), roughness=0.55, metallic=0.0),
+        "animal_horse_brown": create_pbr_material("LegoHorseBrown", (0.42, 0.22, 0.10, 1.0), roughness=0.22, metallic=0.0)
     }
