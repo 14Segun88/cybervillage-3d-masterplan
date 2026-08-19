@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+*.local
+
+# Logs and system artifacts
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.system_generated/
+.tempmediaStorage/
+.user_uploaded/
+
+# Editor / OS
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.idea/
+.vscode/
+
+# Binaries and large engines
+engine/blender_bin/
+engine/blender_bin/**
+
+# Blender cache
+*.blend1
+*.blend2
+__pycache__/
+*.pyc

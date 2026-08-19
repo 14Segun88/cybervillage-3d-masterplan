@@ -1,0 +1,200 @@
+"""
+Tencent Hunyuan3D-WorldClaw: Layout Planning Agent
+Generates semantic spatial layouts, zones, terrain, and asset placement specifications from natural language prompts.
+"""
+
+import json
+from typing import Dict, List, Any
+
+class WorldClawLayoutAgent:
+    def __init__(self, config: Dict[str, Any] = None):
+        self.config = config or {}
+
+    def plan_world_layout(self, prompt: str, city_name: str = "Серпухов") -> Dict[str, Any]:
+        """
+        Translates open-ended text prompt into structured WorldClaw semantic scene graph.
+        """
+        print(f"[WorldClaw LayoutAgent] Planning 3D world layout for '{city_name}' with prompt:\n  {prompt}")
+
+        world_spec = {
+            "version": "WorldClaw-1.0",
+            "region": city_name,
+            "prompt": prompt,
+            "dimensions": {"width": 240, "depth": 240, "height": 80},
+            "terrain": {
+                "biome": "cyber_industrial",
+                "ground_color": "#08111e",
+                "grid_density": 60,
+                "roads": [
+                    {
+                        "id": "road_intercity_highway",
+                        "name": "Межгородская электрическая магистраль",
+                        "type": "highway",
+                        "width": 16,
+                        "length": 240,
+                        "angle_deg": 30,
+                        "lanes": 4,
+                        "traffic": ["byd_e6_taxi", "byd_t5_truck", "byd_heavy_hauler"]
+                    },
+                    {
+                        "id": "road_factory_crossroad",
+                        "name": "Заводской проезд SKD BYD → Дом Такси",
+                        "type": "arterial",
+                        "width": 14,
+                        "length": 160,
+                        "angle_deg": 0,
+                        "lanes": 2,
+                        "traffic": ["byd_e6_taxi"]
+                    }
+                ]
+            },
+            "zones": [
+                {
+                    "zone_id": "zone_center_vityaz_hub",
+                    "name": "Экосистема «Дом Такси» и Электрохаб «Витязь»",
+                    "category": "charging_infrastructure",
+                    "position": {"x": 0, "y": 0, "z": 0},
+                    "bounds": {"w": 40, "h": 14, "d": 35},
+                    "assets": [
+                        {
+                            "asset_id": "vityaz_main_terminal",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Главный корпус «Дом Такси»",
+                            "pos": [0, 4.5, 0],
+                            "scale": [28, 9, 18],
+                            "subsystems": ["телемедицина", "техосмотр", "путевые_листы", "мойка"]
+                        },
+                        {
+                            "asset_id": "fast_charging_canopy_240kw",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Навес зарядного фронта 240 кВт",
+                            "pos": [0, 6.2, 16],
+                            "scale": [32, 0.8, 14],
+                            "units": 6,
+                            "power_kw": 240,
+                            "cooling": "liquid_cooled"
+                        },
+                        {
+                            "asset_id": "factory_kitchen",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Фабрика-Кухня со стеклянной крышей",
+                            "pos": [-16, 2.5, 32],
+                            "scale": [18, 5, 14]
+                        },
+                        {
+                            "asset_id": "charger_manufacturing_unit",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Цех сборки зарядных станций",
+                            "pos": [24, 3.5, 12],
+                            "scale": [16, 7, 14]
+                        }
+                    ]
+                },
+                {
+                    "zone_id": "zone_skd_factory_north",
+                    "name": "Завод Крупноузловой Сборки [SKD] BYD",
+                    "category": "automotive_manufacturing",
+                    "position": {"x": 0, "y": 0, "z": -50},
+                    "bounds": {"w": 70, "h": 24, "d": 40},
+                    "assets": [
+                        {
+                            "asset_id": "skd_assembly_hall",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Сборочный цех SKD BYD",
+                            "pos": [0, 7.5, 0],
+                            "scale": [46, 15, 26],
+                            "production_rate": "100-1000 авто/мес"
+                        },
+                        {
+                            "asset_id": "robotic_conveyor_line",
+                            "model_type": "hunyuan3d_articulated_robot",
+                            "name": "Роботизированный конвейер с лазерной сваркой",
+                            "pos": [12, 0.9, 18],
+                            "scale": [54, 1.8, 7],
+                            "robot_count": 4
+                        },
+                        {
+                            "asset_id": "retail_showroom_30pct",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Автосалон розничной продажи (30%)",
+                            "pos": [44, 4, 18],
+                            "scale": [20, 8, 16]
+                        },
+                        {
+                            "asset_id": "scaling_target_tower",
+                            "model_type": "hunyuan3d_hologram",
+                            "name": "График масштабирования: 2 000 000 авто за 5 лет",
+                            "pos": [48, 12, -8],
+                            "scale": [9, 24, 9]
+                        }
+                    ]
+                },
+                {
+                    "zone_id": "zone_energy_agro_southwest",
+                    "name": "Энергетика и Агрокомплекс «Чистая Страна»",
+                    "category": "energy_and_agriculture",
+                    "position": {"x": -56, "y": 0, "z": 32},
+                    "bounds": {"w": 50, "h": 22, "d": 45},
+                    "assets": [
+                        {
+                            "asset_id": "thermal_power_plant",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Угольная и Газовая ТЭЦ",
+                            "pos": [-10, 7, -18],
+                            "scale": [24, 14, 20]
+                        },
+                        {
+                            "asset_id": "district_heat_pipes",
+                            "model_type": "hunyuan3d_pipe_network",
+                            "name": "Теплотрассы сбросного тепла",
+                            "pos": [4, 1.4, -6],
+                            "length": 42
+                        },
+                        {
+                            "asset_id": "greenhouses_arched",
+                            "model_type": "hunyuan3d_transparent_mesh",
+                            "name": "Стеклянные арочные теплицы (3 блока)",
+                            "pos": [0, 0, 10],
+                            "count": 3
+                        }
+                    ]
+                },
+                {
+                    "zone_id": "zone_cyber_village_southeast",
+                    "name": "Кибердеревня: Технологический Центр",
+                    "category": "innovation_tech_campus",
+                    "position": {"x": 54, "y": 0, "z": 32},
+                    "bounds": {"w": 55, "h": 42, "d": 45},
+                    "assets": [
+                        {
+                            "asset_id": "tech_center_skyscraper",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Небоскреб Технологического Центра",
+                            "pos": [0, 21, 0],
+                            "scale": [16, 42, 16]
+                        },
+                        {
+                            "asset_id": "ai_geodesic_dome",
+                            "model_type": "hunyuan3d_geodesic_dome",
+                            "name": "Геокупол лабораторий ИИ и АКБ",
+                            "pos": [20, 0, 16],
+                            "radius": 10
+                        },
+                        {
+                            "asset_id": "drone_testing_ground",
+                            "model_type": "hunyuan3d_mesh",
+                            "name": "Испытательный полигон БПЛА и роботов",
+                            "pos": [18, 0.2, -16],
+                            "radius": 8
+                        }
+                    ]
+                }
+            ]
+        }
+
+        return world_spec
+
+if __name__ == "__main__":
+    agent = WorldClawLayoutAgent()
+    spec = agent.plan_world_layout("Экосистема Дом Такси, Завод BYD SKD, ТЭЦ и Кибердеревня в Серпухове")
+    print(json.dumps(spec, indent=2, ensure_ascii=False))
