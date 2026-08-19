@@ -38,7 +38,8 @@ def build_energy_agro_sector():
     # 1. Base Platform (Компактная аккуратная база строго под размер зданий фермы)
     create_box("Agro_Master_Green_Base", (-15, 5, 0.2), (160, 115, 0.4), mats["lego_green"], root)
     create_box("Coal_Plaza_Asphalt", (-55, 25, 0.45), (58, 50, 0.3), mats["asphalt_gray"], root)
-    create_box("Gas_Plaza_Asphalt", (35, 30, 0.45), (58, 50, 0.3), mats["asphalt_gray"], root)
+    create_box("Gas_Plaza_Asphalt", (-55, -24, 0.45), (58, 48, 0.3), mats["asphalt_gray"], root) # Перемещена на ближний передний план
+    create_box("Solar_BESS_Plaza", (35, 30, 0.45), (58, 50, 0.3), mats["asphalt_gray"], root) # Солнечный парк и накопители BESS
     create_box("Central_Agro_Road", (-5, -17.5, 0.45), (105, 12.0, 0.3), mats["asphalt_gray"], root)
     create_box("Farm_Plaza_Asphalt", (45, -20, 0.45), (50, 50, 0.3), mats["asphalt_gray"], root)
 
@@ -96,48 +97,52 @@ def build_energy_agro_sector():
         create_cylinder(f"Coal_Chimney_Top_{i}", (cx, cy, 31.0), radius=2.8, depth=1.2, material=mats["dark_slate_roof"], parent=root)
 
     # =========================================================================
-    # 3. ПРОСТОРНАЯ ГАЗОВАЯ ТЭЦ С ПРОХОДИМЫМ ГАЗОТУРБИННЫМ ЗАЛОМ
+    # 3. ГАЗОВАЯ ТЭЦ (ПЕРЕНЕСЕНА НА ПЕРЕДНИЙ ПЛАН СЛЕВА: X = -58, Y = -22)
     # =========================================================================
     # 3.1 Главный газотурбинный зал с открытыми воротами
-    create_box("Gas_Turbine_Floor", (25, 30, 0.5), (28, 28, 0.2), mats["road_curb"], root)
-    # Стены с открытым входом спереди (Y = 16)
-    create_box("Gas_Wall_Back", (25, 44, 8.0), (28, 0.8, 16), mats["white_wall"], root)
-    create_box("Gas_Wall_Left", (11, 30, 8.0), (0.8, 28, 16), mats["white_wall"], root)
-    create_box("Gas_Wall_Right", (39, 30, 8.0), (0.8, 28, 16), mats["white_wall"], root)
-    create_box("Gas_Wall_F_L", (16, 16, 8.0), (10, 0.8, 16), mats["white_wall"], root)
-    create_box("Gas_Wall_F_R", (34, 16, 8.0), (10, 0.8, 16), mats["white_wall"], root)
-    create_box("Gas_Wall_F_Top", (25, 16, 13.0), (10, 0.8, 6), mats["white_wall"], root)
+    create_box("Gas_Turbine_Floor", (-60, -22, 0.5), (28, 26, 0.2), mats["road_curb"], root)
+    create_box("Gas_Wall_Back", (-60, -9, 7.5), (28, 0.8, 15), mats["white_wall"], root)
+    create_box("Gas_Wall_Left", (-74, -22, 7.5), (0.8, 26, 15), mats["white_wall"], root)
+    create_box("Gas_Wall_Right", (-46, -22, 7.5), (0.8, 26, 15), mats["white_wall"], root)
+    create_box("Gas_Wall_F_L", (-69, -35, 7.5), (10, 0.8, 15), mats["white_wall"], root)
+    create_box("Gas_Wall_F_R", (-51, -35, 7.5), (10, 0.8, 15), mats["white_wall"], root)
+    create_box("Gas_Wall_F_Top", (-60, -35, 12.0), (10, 0.8, 6), mats["white_wall"], root)
 
-    create_triangular_roof("Gas_Roof_Main", (25, 30, 18.8), width=29, length=29, height=8.5, rotation=(math.pi/2, 0, 0), material=mats["lego_red_brick"], parent=root)
-    create_box("Gas_Signboard", (25, 15.4, 13.5), (18, 0.4, 2.4), mats["factory_blue"], root)
+    create_triangular_roof("Gas_Roof_Main", (-60, -22, 17.8), width=29, length=27, height=8.0, rotation=(math.pi/2, 0, 0), material=mats["lego_red_brick"], parent=root)
+    create_box("Gas_Signboard", (-60, -35.4, 12.5), (18, 0.4, 2.4), mats["factory_blue"], root)
 
     # Внутренняя газовая турбина, генератор и щиты управления
-    create_cylinder("Gas_Turbine_Unit", (25, 30, 3.0), radius=2.5, depth=16, rotation=(0, math.pi/2, 0), material=mats["steel_dark"], parent=root)
-    create_cylinder("Gas_Turbine_Ring_1", (20, 30, 3.0), radius=2.8, depth=0.8, rotation=(0, math.pi/2, 0), material=mats["gantry_yellow"], parent=root)
-    create_cylinder("Gas_Turbine_Ring_2", (30, 30, 3.0), radius=2.8, depth=0.8, rotation=(0, math.pi/2, 0), material=mats["gantry_yellow"], parent=root)
+    create_cylinder("Gas_Turbine_Unit", (-60, -22, 3.0), radius=2.5, depth=16, rotation=(0, math.pi/2, 0), material=mats["steel_dark"], parent=root)
+    create_cylinder("Gas_Turbine_Ring_1", (-65, -22, 3.0), radius=2.8, depth=0.8, rotation=(0, math.pi/2, 0), material=mats["gantry_yellow"], parent=root)
+    create_cylinder("Gas_Turbine_Ring_2", (-55, -22, 3.0), radius=2.8, depth=0.8, rotation=(0, math.pi/2, 0), material=mats["gantry_yellow"], parent=root)
 
-    # Lego-щит управления энергоблоком (шкафы с приборами и кнопками)
-    create_box("Gas_Control_Panel_1", (15, 38, 2.2), (1.2, 5.0, 3.5), mats["factory_blue"], root)
-    create_box("Gas_Control_Screen_1", (15.6, 38, 2.5), (0.1, 4.2, 1.8), mats["sign_blue"], root)
-    create_box("Gas_Control_Panel_2", (35, 38, 2.2), (1.2, 5.0, 3.5), mats["factory_blue"], root)
-    create_box("Gas_Control_Screen_2", (34.4, 38, 2.5), (0.1, 4.2, 1.8), mats["sign_blue"], root)
-
-    # 3.2 Котел HRSG и ГРП
-    gas_boiler = create_box("Gas_Boiler_Unit", (46, 33, 7.0), (20, 22, 14), mats["white_wall"], root)
-    create_triangular_roof("Gas_Roof_Boiler", (46, 33, 16.2), width=21, length=23, height=7.0, rotation=(math.pi/2, 0, 0), material=mats["lego_red_brick"], parent=root)
+    # 3.2 Котел HRSG (второе здание с красной скатной крышей)
+    create_box("Gas_Boiler_Unit", (-37, -22, 6.5), (18, 22, 13), mats["white_wall"], root)
+    create_triangular_roof("Gas_Roof_Boiler", (-37, -22, 15.2), width=19, length=23, height=6.5, rotation=(math.pi/2, 0, 0), material=mats["lego_red_brick"], parent=root)
     for fan_i in range(3):
-        create_box(f"Gas_Cooler_Fan_{fan_i}", (40 + fan_i * 6, 33, 18.0), (5.0, 5.0, 2.2), mats["gray_industrial"], root)
+        create_box(f"Gas_Cooler_Fan_{fan_i}", (-42 + fan_i * 5.0, -22, 16.8), (4.5, 4.5, 2.0), mats["gray_industrial"], root)
 
-    create_box("Gas_GRP_Building", (10, 46, 4.0), (12, 14, 8), mats["gray_industrial"], root)
+    create_box("Gas_GRP_Building", (-76, -8, 4.0), (10, 12, 8), mats["gray_industrial"], root)
     for gi in range(4):
-        create_cylinder(f"Gas_Tank_{gi}", (7.0 + gi * 2.5, 54, 4.0), radius=1.1, depth=7.0, material=mats["gantry_yellow"], parent=root)
+        create_cylinder(f"Gas_Tank_{gi}", (-79.0 + gi * 2.2, -1, 4.0), radius=1.0, depth=6.5, material=mats["gantry_yellow"], parent=root)
 
     # 2 Трубы Газовой ТЭЦ
-    create_cylinder("Gas_Chimney_1", (33, 50, 18), radius=2.4, depth=28, material=mats["white_wall"], parent=root)
-    create_cylinder("Gas_Chimney_1_Red1", (33, 50, 23), radius=2.45, depth=4.0, material=mats["lego_red_brick"], parent=root)
-    create_cylinder("Gas_Chimney_1_Red2", (33, 50, 28), radius=2.45, depth=4.0, material=mats["lego_red_brick"], parent=root)
-    create_cylinder("Gas_Chimney_2", (48, 46, 16), radius=2.0, depth=24, material=mats["white_wall"], parent=root)
-    create_cylinder("Gas_Chimney_2_Red1", (48, 46, 21), radius=2.05, depth=3.5, material=mats["lego_red_brick"], parent=root)
+    create_cylinder("Gas_Chimney_1", (-60, -6, 17), radius=2.4, depth=26, material=mats["white_wall"], parent=root)
+    create_cylinder("Gas_Chimney_1_Red1", (-60, -6, 22), radius=2.45, depth=4.0, material=mats["lego_red_brick"], parent=root)
+    create_cylinder("Gas_Chimney_1_Red2", (-60, -6, 27), radius=2.45, depth=4.0, material=mats["lego_red_brick"], parent=root)
+    create_cylinder("Gas_Chimney_1_Top", (-60, -6, 30.0), radius=2.5, depth=1.0, material=mats["dark_slate_roof"], parent=root)
+
+    create_cylinder("Gas_Chimney_2", (-37, -6, 15), radius=2.0, depth=22, material=mats["white_wall"], parent=root)
+    create_cylinder("Gas_Chimney_2_Red1", (-37, -6, 19), radius=2.05, depth=3.5, material=mats["lego_red_brick"], parent=root)
+    create_cylinder("Gas_Chimney_2_Red2", (-37, -6, 23), radius=2.05, depth=3.5, material=mats["lego_red_brick"], parent=root)
+    create_cylinder("Gas_Chimney_2_Top", (-37, -6, 26.0), radius=2.1, depth=1.0, material=mats["dark_slate_roof"], parent=root)
+
+    # 3.3 Солнечный парк и Батарейные накопители BESS на освободившемся верхнем месте (35, 30)
+    for srow in range(3):
+        for scol in range(4):
+            create_box(f"Solar_Panel_{srow}_{scol}", (18 + scol * 10, 20 + srow * 10, 2.5), (8.5, 7.5, 0.4), mats["solar_pv_panel"], root)
+    create_box("BESS_Container_1", (30, 48, 3.5), (16, 7.0, 7.0), mats["white_wall"], root)
+    create_box("BESS_Container_2", (48, 48, 3.5), (16, 7.0, 7.0), mats["white_wall"], root)
 
     # =========================================================================
     # 4. ПРОСТОРНЫЕ ПРОХОДИМЫЕ ТЕПЛИЦЫ (2 РЯДА ПО 4 ТЕПЛИЦЫ С ОТКРЫТЫМИ ВХОДАМИ)
@@ -189,7 +194,7 @@ def build_energy_agro_sector():
     # 5. СЕТЬ СИНИХ ТЕПЛОТРАСС
     # =========================================================================
     create_cylinder("Pipe_Coal_Outlet", (-36, 12, 1.8), radius=1.2, depth=24, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
-    create_cylinder("Pipe_Gas_Outlet", (25, 16, 1.8), radius=1.2, depth=24, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
+    create_cylinder("Pipe_Gas_Outlet", (-37, -10, 1.8), radius=1.2, depth=16, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
     create_cylinder("Pipe_Central_Header", (-5, 0, 1.8), radius=1.3, depth=72, rotation=(0, math.pi/2, 0), material=mats["thermal_pipe_blue"], parent=root)
     create_cylinder("Pipe_Between_GH_Rows", (-15, -17.5, 1.5), radius=1.0, depth=64, rotation=(0, math.pi/2, 0), material=mats["thermal_pipe_blue"], parent=root)
     create_cylinder("Pipe_To_Farm_Kitchen", (28, -17.5, 1.5), radius=1.1, depth=24, rotation=(0, math.pi/2, 0), material=mats["thermal_pipe_blue"], parent=root)
