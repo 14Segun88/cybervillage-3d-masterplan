@@ -72,13 +72,13 @@ def build_energy_agro_sector():
     root = bpy.data.objects.new("Energy_Agro_Sector_Root", None)
     bpy.context.scene.collection.objects.link(root)
 
-    # 1. Base Platform (Широкая мастер-платформа для гармоничного простора)
-    create_box("Agro_Master_Green_Base", (-15, 0, 0.2), (230, 125, 0.4), mats["lego_green"], root)
+    # 1. Base Platform
+    create_box("Agro_Master_Green_Base", (-15, 0, 0.2), (240, 140, 0.4), mats["lego_green"], root)
     create_box("Coal_Plaza_Asphalt", (-95, 28, 0.45), (55, 48, 0.3), mats["asphalt_gray"], root)
     create_box("Gas_Plaza_Asphalt", (-95, -28, 0.45), (55, 48, 0.3), mats["asphalt_gray"], root)
     create_box("Central_Boulevard_Road", (-15, 0, 0.45), (190, 14.0, 0.3), mats["asphalt_gray"], root)
     create_box("Central_Road_Stripe", (-15, 0, 0.62), (180, 0.6, 0.05), mats["road_stripe_yellow"], root)
-    create_box("Farm_Plaza_Asphalt", (58, -12, 0.45), (65, 80, 0.3), mats["asphalt_gray"], root)
+    create_box("Farm_Plaza_Asphalt", (60, 0, 0.45), (36, 32, 0.3), mats["asphalt_gray"], root)
 
     # =========================================================================
     # 2. УГОЛЬНАЯ ТЭЦ (2x150 МВт) - ОТОДВИНУТА ДАЛЬШЕ НА ЗАПАД (X = -95, Y = +28)
@@ -227,8 +227,8 @@ def build_energy_agro_sector():
 
     # Главная подающая труба на Ферму и Агропереработку
     create_cylinder("Pipe_To_Farm_Main", (42, 0, 2.0), radius=1.4, depth=46, rotation=(0, math.pi/2, 0), material=mats["thermal_pipe_blue"], parent=root)
-    create_cylinder("Pipe_To_Farm_Branch1", (55, 12, 1.8), radius=1.1, depth=24, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
-    create_cylinder("Pipe_To_Farm_Branch2", (55, -12, 1.8), radius=1.1, depth=24, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
+    create_cylinder("Pipe_To_Farm_Branch1", (42, 24, 1.8), radius=1.1, depth=48, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
+    create_cylinder("Pipe_To_Farm_Branch2", (42, -24, 1.8), radius=1.1, depth=48, rotation=(math.pi/2, 0, 0), material=mats["thermal_pipe_blue"], parent=root)
 
     # =========================================================================
     # 6. ФЕРМА: ФАБРИКА-КУХНЯ, ЛУГА С ОВОЩАМИ И ПАСТБИЩЕ ЖИВОТНЫХ
@@ -237,34 +237,35 @@ def build_energy_agro_sector():
     create_box("Farm_Kitchen_Main", (62, 0, 6.0), (22, 28, 12.0), mats["white_wall"], root)
     create_triangular_roof("Farm_Kitchen_Roof", (62, 0, 15.5), width=23, length=29, height=7.5, rotation=(math.pi/2, 0, 0), material=mats["lego_red_brick"], parent=root)
     create_box("Farm_Kitchen_Sign", (50.6, 0, 10.5), (0.4, 16, 2.8), mats["lego_red_brick"], root)
-    create_cylinder("Farm_Silo_Feed", (52, 18, 8.0), radius=3.8, depth=16.0, material=mats["gray_industrial"], parent=root)
-    create_cylinder("Farm_Silo_Cap", (52, 18, 16.8), radius=4.0, depth=2.2, material=mats["dark_slate_roof"], parent=root)
+    create_cylinder("Farm_Silo_Feed", (52, 16, 8.0), radius=3.6, depth=16.0, material=mats["gray_industrial"], parent=root)
+    create_cylinder("Farm_Silo_Cap", (52, 16, 16.8), radius=3.8, depth=2.2, material=mats["dark_slate_roof"], parent=root)
 
-    # 6.2 ЛУГА С ОВОЩАМИ (Vegetable Fields & Furrows: X = 32..85, Y = 22..48)
-    create_box("Veg_Field_Base", (55, 34, 0.4), (55, 24, 0.3), mats["soil_brown"], root)
+    # 6.2 ЛУГА С ОВОЩАМИ (Отодвинуты на безопасное и просторное расстояние: Y = 48)
+    create_box("Veg_Field_Base", (60, 48, 0.4), (52, 20, 0.3), mats["soil_brown"], root)
     # Лего-забор вокруг овощных полей
-    create_box("Veg_Fence_N", (55, 46.2, 0.8), (56, 0.4, 0.8), mats["wood_fence"], root)
-    create_box("Veg_Fence_S", (55, 21.8, 0.8), (56, 0.4, 0.8), mats["wood_fence"], root)
-    create_box("Veg_Fence_E", (82.8, 34, 0.8), (0.4, 24.8, 0.8), mats["wood_fence"], root)
+    create_box("Veg_Fence_N", (60, 58.2, 0.8), (53, 0.4, 0.8), mats["wood_fence"], root)
+    create_box("Veg_Fence_S", (60, 37.8, 0.8), (53, 0.4, 0.8), mats["wood_fence"], root)
+    create_box("Veg_Fence_E", (86.2, 48, 0.8), (0.4, 20.8, 0.8), mats["wood_fence"], root)
+    create_box("Veg_Fence_W", (33.8, 48, 0.8), (0.4, 20.8, 0.8), mats["wood_fence"], root)
 
     # Грядки 1: Морковь с оранжевыми плодами
     for row in range(3):
-        create_box(f"Carrot_Bed_{row}", (38 + row * 6.5, 34, 0.7), (4.5, 21, 0.3), mats["soil_brown"], root)
-        for plant in range(7):
-            create_box(f"Carrot_Top_{row}_{plant}", (38 + row * 6.5, 25 + plant * 3.0, 1.1), (2.0, 2.0, 0.4), mats["crop_carrot_orange"], root)
-            create_cylinder(f"Carrot_Leaf_{row}_{plant}", (38 + row * 6.5, 25 + plant * 3.0, 1.5), radius=0.6, depth=0.6, material=mats["crop_green"], parent=root)
+        create_box(f"Carrot_Bed_{row}", (40 + row * 6.5, 48, 0.7), (4.5, 17, 0.3), mats["soil_brown"], root)
+        for plant in range(6):
+            create_box(f"Carrot_Top_{row}_{plant}", (40 + row * 6.5, 41 + plant * 2.8, 1.1), (2.0, 2.0, 0.4), mats["crop_carrot_orange"], root)
+            create_cylinder(f"Carrot_Leaf_{row}_{plant}", (40 + row * 6.5, 41 + plant * 2.8, 1.5), radius=0.6, depth=0.6, material=mats["crop_green"], parent=root)
 
     # Грядки 2: Капуста
     for row in range(2):
-        create_box(f"Cabbage_Bed_{row}", (60 + row * 7.0, 34, 0.7), (5.0, 21, 0.3), mats["soil_brown"], root)
-        for plant in range(6):
-            create_cylinder(f"Cabbage_Head_{row}_{plant}", (60 + row * 7.0, 25.5 + plant * 3.4, 1.2), radius=1.0, depth=1.0, material=mats["crop_cabbage_lime"], parent=root, vertices=12)
+        create_box(f"Cabbage_Bed_{row}", (61 + row * 7.0, 48, 0.7), (5.0, 17, 0.3), mats["soil_brown"], root)
+        for plant in range(5):
+            create_cylinder(f"Cabbage_Head_{row}_{plant}", (61 + row * 7.0, 41.5 + plant * 3.2, 1.2), radius=1.0, depth=1.0, material=mats["crop_cabbage_lime"], parent=root, vertices=12)
 
     # Грядки 3: Кукуруза и злаки
-    create_box("Corn_Bed", (76, 34, 0.7), (6.0, 21, 0.3), mats["soil_brown"], root)
-    for plant in range(8):
-        create_cylinder(f"Corn_Stalk_{plant}", (76, 25 + plant * 2.6, 2.2), radius=0.35, depth=3.0, material=mats["crop_green"], parent=root)
-        create_cylinder(f"Corn_Ear_{plant}", (76, 25 + plant * 2.6, 2.8), radius=0.6, depth=1.4, material=mats["crop_corn_gold"], parent=root)
+    create_box("Corn_Bed", (77, 48, 0.7), (6.0, 17, 0.3), mats["soil_brown"], root)
+    for plant in range(7):
+        create_cylinder(f"Corn_Stalk_{plant}", (77, 41 + plant * 2.4, 2.2), radius=0.35, depth=3.0, material=mats["crop_green"], parent=root)
+        create_cylinder(f"Corn_Ear_{plant}", (77, 41 + plant * 2.4, 2.8), radius=0.6, depth=1.4, material=mats["crop_corn_gold"], parent=root)
 
     # 6.3 ПАСТБИЩЕ ЖИВОТНЫХ (Livestock Pasture & Barn: X = 32..85, Y = -48..-16)
     create_box("Pasture_Meadow", (58, -32, 0.4), (58, 28, 0.3), mats["lego_green"], root)
